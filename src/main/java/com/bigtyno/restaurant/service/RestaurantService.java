@@ -6,6 +6,8 @@ import com.bigtyno.restaurant.repository.RestaurantRepository;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
+import java.util.List;
+
 @Service
 public class RestaurantService {
 
@@ -38,5 +40,9 @@ public class RestaurantService {
         Restaurant restaurant = new Restaurant(requestDto);
 
         return  restaurantRepository.save(restaurant);
+    }
+
+    public List<Restaurant> getListRestaurant() {
+        return  restaurantRepository.findAll();
     }
 }
