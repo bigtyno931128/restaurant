@@ -34,4 +34,5 @@ public class RestaurantController {
         List<Restaurant> restaurantList = restaurantService.getListRestaurant();
         return restaurantList;
     }
+
 }

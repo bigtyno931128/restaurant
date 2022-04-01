@@ -13,6 +13,7 @@ public class Restaurant {
 
     @GeneratedValue(strategy = GenerationType.AUTO)
     @Id
+    @Column(name ="RESTAURANT_ID")
     private Long Id;
 
     @Column(nullable = false)
