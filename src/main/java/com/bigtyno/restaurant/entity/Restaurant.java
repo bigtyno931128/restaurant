@@ -1,10 +1,12 @@
 package com.bigtyno.restaurant.entity;
 
 import com.bigtyno.restaurant.dto.RestaurantRequestDto;
+import com.fasterxml.jackson.annotation.JsonIgnoreProperties;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
 
 import javax.persistence.*;
+import java.util.List;
 
 @Getter
 @NoArgsConstructor
@@ -24,6 +26,9 @@ public class Restaurant {
 
     @Column(nullable = false)
     private Long deliveryFee;
+
+    @OneToMany(mappedBy = "Food", fetch = FetchType.EAGER)
+    private List<Food> foodList;
 
     public Restaurant(RestaurantRequestDto requestDto){
         this.name = requestDto.getName();

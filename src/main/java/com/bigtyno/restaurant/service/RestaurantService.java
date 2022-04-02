@@ -18,7 +18,7 @@ public class RestaurantService {
         this.restaurantRepository =restaurantRepository;
     }
 
-    public Restaurant createRestaurant(RestaurantRequestDto requestDto){
+    public Restaurant registeredRestaurant(RestaurantRequestDto requestDto){
 
         //2. 최소주문 가격 (minOrderPrice)
         //    1. 허용값: 1,000원 ~ 100,000원 입력

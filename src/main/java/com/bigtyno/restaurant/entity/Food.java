@@ -30,4 +30,7 @@ public class Food {
         this.price = foodDto.getPrice();
         this.restaurant = restaurant;
     }
+
+    public Food(String restaurantName, Long quantity, Long price) {
+    }
 }

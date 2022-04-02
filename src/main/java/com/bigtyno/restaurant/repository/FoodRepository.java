@@ -11,4 +11,6 @@ public interface FoodRepository extends JpaRepository<Food, Long> {
     boolean existsByRestaurantAndName(Restaurant restaurant, String name);
 
     List<Food> findAllByRestaurant(Restaurant restaurant);
+
+
 }

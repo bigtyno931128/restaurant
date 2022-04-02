@@ -21,8 +21,11 @@ public class FoodController {
     //음식점에 메뉴판 등록
     @PostMapping("/restaurant/{restaurantId}/food/register")
     public void createFood(@PathVariable Long restaurantId, @RequestBody List<FoodDto> foodList) {
+
         foodService.createFood(restaurantId, foodList);
+
     }
+
     // 음식점에 메뉴판 가져오기
     @GetMapping("/restaurant/{restaurantId}/foods")
     public List<Food> getFoodList(@PathVariable Long restaurantId) {

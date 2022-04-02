@@ -23,13 +23,13 @@ public class RestaurantController {
     }
 
     //음식점 등록
-    @PostMapping(" /restaurant/register")
-    public Restaurant createRestaurant(@RequestBody RestaurantRequestDto requestDto){
-        return restaurantService.createRestaurant(requestDto);
+    @PostMapping("/restaurant/register")
+    public Restaurant registeredRestaurant(@RequestBody RestaurantRequestDto requestDto){
+        return restaurantService.registeredRestaurant(requestDto);
     }
 
     //음식점 조회
-    @GetMapping(" /restaurants")
+    @GetMapping("/restaurants")
     public List<Restaurant> getListRestaurant(){
         List<Restaurant> restaurantList = restaurantService.getListRestaurant();
         return restaurantList;
