@@ -22,13 +22,14 @@ public class Restaurant {
     private String name;
 
     @Column(nullable = false)
-    private Long minOrderPrice;
+    private int minOrderPrice;
 
     @Column(nullable = false)
-    private Long deliveryFee;
+    private int deliveryFee;
 
-    @OneToMany(mappedBy = "Food", fetch = FetchType.EAGER)
-    private List<Food> foodList;
+//    @OneToMany(mappedBy = "food", fetch = FetchType.EAGER)
+//    @JsonIgnoreProperties({"food"})
+//    private List<Food> foodList;
 
     public Restaurant(RestaurantRequestDto requestDto){
         this.name = requestDto.getName();

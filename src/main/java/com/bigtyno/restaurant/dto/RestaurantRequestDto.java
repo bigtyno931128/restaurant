@@ -9,6 +9,6 @@ import lombok.NoArgsConstructor;
 @Getter
 public class RestaurantRequestDto {
     private String name;
-    private Long minOrderPrice;
-    private Long deliveryFee;
+    private int minOrderPrice;
+    private int deliveryFee;
 }

@@ -19,11 +19,12 @@ public class Food {
     private String name;
 
     @Column(nullable = false)
-    private Long price;
+    private int price;
 
-    @ManyToOne
-    @JoinColumn(name = "RESTAURANT_ID", nullable = false)
+    @ManyToOne(fetch = FetchType.LAZY)
+    @JoinColumn(name = "RESTAURANT_NAME", nullable = false)
     private Restaurant restaurant;
+
 
     public Food(Restaurant restaurant,FoodDto foodDto ){
         this.name = foodDto.getName();
