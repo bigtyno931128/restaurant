@@ -1,6 +1,6 @@
 package com.bigtyno.restaurant.entity;
 
-import com.bigtyno.restaurant.dto.FoodOrderDto;
+
 import lombok.Getter;
 import lombok.NoArgsConstructor;
 

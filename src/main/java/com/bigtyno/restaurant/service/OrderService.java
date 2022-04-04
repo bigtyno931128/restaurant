@@ -12,6 +12,7 @@ import com.bigtyno.restaurant.repository.FoodRepository;
 import com.bigtyno.restaurant.repository.OrderFoodRepository;
 import com.bigtyno.restaurant.repository.OrdersRepository;
 import com.bigtyno.restaurant.repository.RestaurantRepository;
+import org.hibernate.criterion.Order;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 import javax.transaction.Transactional;
@@ -51,13 +52,23 @@ public class OrderService {
 
         for (FoodOrderRequestDto foodOrderRequestDto : orderRequestDto.getFoods()) {
 
+            //음식을 주문할 수량 (quantity)
+            //    1. 허용값: 1 ~ 100
+            //    2. 허용값이 아니면 에러 발생시킴
+
+            if (foodOrderRequestDto.getQuantity() < 1 || foodOrderRequestDto.getQuantity() >100){
+                throw new IllegalArgumentException("허용수량 에 해당하지 않습니다.");
+            }
             int quantity = foodOrderRequestDto.getQuantity();
-            System.out.println(quantity);
+
+
             Food food = foodRepository.findById(foodOrderRequestDto.getId()).orElseThrow(
                     () -> new IllegalArgumentException(""));
 
+            // OrderFood 를 생성자를 통해 초기화.
             OrderFood orderFood = new OrderFood(food, quantity);
 
+            // FoodOrderDto 를 생성자를 통해 초기화 .
             FoodOrderDto foodOrderDto = new FoodOrderDto(
                     food.getName(),
                     quantity,
@@ -65,15 +76,55 @@ public class OrderService {
             );
 
             orderFoodList.add(orderFood);
-            totalPrice += orderFood.getPrice() ;
-            orderFoodRepository.save(orderFood);
-            foodOrderDtoList.add(foodOrderDto);
 
+            totalPrice += orderFood.getPrice();
+            orderFoodRepository.save(orderFood);
+
+            foodOrderDtoList.add(foodOrderDto);
         }
+
+        //"주문 음식 가격들의 총 합" 이 주문 음식점의 "최소주문 가격" 을 넘지 않을 시 에러 발생시킴
+        if(restaurant.getMinOrderPrice() > totalPrice-deliveryFee)
+            throw new IllegalArgumentException("");
 
         OrderDto orderDto = new OrderDto(restaurantName,foodOrderDtoList,deliveryFee,totalPrice);
         Orders orders = new Orders(restaurantName,orderFoodList,deliveryFee,totalPrice);
         ordersRepository.save(orders);
         return orderDto;
+    }
+
+    // 그 동안 성공한 모든 주문 조회 하기
+    public List<OrderDto> getAllOrder() {
+
+        List<Orders> ordersList = ordersRepository.findAll();
+        List<OrderDto> orderDtoList = new ArrayList<>();
+
+        //주문 리스트에서 주문 하나씩 확인하기.
+        for(Orders orders: ordersList){
+            String restaurantName = orders.getRestaurantName();
+            //controller 에 보내줄 <FoodOrderDto> 에 값 채워주기 위해서
+            List<FoodOrderDto> foodOrderDtoList  = new ArrayList<>();
+            //주문에서 foods 하나씩 꺼내기.
+            for(OrderFood orderFood :orders.getOrderFoodList()){
+                String name = orderFood.getName();
+                int quantity = orderFood.getQuantity();
+                int price = orderFood.getPrice();
+
+                FoodOrderDto foodOrderDto = new FoodOrderDto(
+                  name,quantity,price
+                );
+                foodOrderDtoList.add(foodOrderDto);
+            }
+
+            int deliveryFee = orders.getDeliveryFee();
+            int totalPrice = orders.getTotalPrice();
+
+            OrderDto orderDto = new OrderDto(
+                    restaurantName,foodOrderDtoList,deliveryFee,totalPrice
+            );
+
+            orderDtoList.add(orderDto);
+        }
+        return  orderDtoList;
     }
 }

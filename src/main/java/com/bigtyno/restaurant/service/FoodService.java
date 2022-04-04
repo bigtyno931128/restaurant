@@ -38,7 +38,7 @@ public class FoodService {
 
             }
             // 허용값 1000 이상 1000이상 100만원 이하
-            //System.out.println(foodDto.getPrice());
+
             if (foodDto.getPrice() < 1000 || foodDto.getPrice() >1000000){
                 throw new IllegalArgumentException("허용가격에 해당하지 않습니다.");
             }
