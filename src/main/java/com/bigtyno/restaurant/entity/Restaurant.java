@@ -27,6 +27,12 @@ public class Restaurant {
     @Column(nullable = false)
     private int deliveryFee;
 
+    @Column(nullable = true)
+    private int x;
+
+    @Column(nullable = true)
+    private int y;
+
 //    @OneToMany(mappedBy = "food", fetch = FetchType.EAGER)
 //    @JsonIgnoreProperties({"food"})
 //    private List<Food> foodList;
