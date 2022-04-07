@@ -4,6 +4,7 @@ import com.bigtyno.restaurant.dto.OrderDto;
 import com.bigtyno.restaurant.dto.OrderRequestDto;
 
 
+import com.bigtyno.restaurant.entity.Orders;
 import com.bigtyno.restaurant.service.OrderService;
 
 import org.springframework.beans.factory.annotation.Autowired;
@@ -12,6 +13,7 @@ import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RestController;
 
+import javax.persistence.criteria.Order;
 import java.util.List;
 
 

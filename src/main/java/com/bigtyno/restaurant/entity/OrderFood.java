@@ -12,6 +12,7 @@ public class OrderFood {
 
     @GeneratedValue(strategy = GenerationType.AUTO)
     @Id
+    @Column(name = "ORDER_FOOD_ID")
     private Long id;
 
 //    @Column(nullable = false)
@@ -25,6 +26,10 @@ public class OrderFood {
 
     @Column(nullable = false)
     private int price;
+
+    @ManyToOne
+    @JoinColumn(name = "ORDERS_ID")
+    private Orders orders;
 
 
     public OrderFood(Food food, int quantity) {

@@ -13,6 +13,7 @@ public class Food {
 
     @GeneratedValue(strategy = GenerationType.AUTO)
     @Id
+    @Column(name = "FOOD_ID")
     private Long id;
 
     @Column(nullable = false)
@@ -21,15 +22,17 @@ public class Food {
     @Column(nullable = false)
     private int price;
 
-    @ManyToOne(fetch = FetchType.LAZY)
-    @JoinColumn(name = "RESTAURANT_NAME", nullable = false)
+    @ManyToOne
+    @JoinColumn(name = "RESTAURANT_ID", insertable = false, updatable = false)
     private Restaurant restaurant;
 
+    private String restaurantName;
 
     public Food(Restaurant restaurant,FoodDto foodDto ){
         this.name = foodDto.getName();
         this.price = foodDto.getPrice();
         this.restaurant = restaurant;
+        this.restaurantName = restaurant.getName();
     }
 
     public Food(String restaurantName, Long quantity, Long price) {

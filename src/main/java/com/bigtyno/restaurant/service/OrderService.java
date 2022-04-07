@@ -105,7 +105,7 @@ public class OrderService {
             //controller 에 보내줄 <FoodOrderDto> 에 값 채워주기 위해서
             List<FoodOrderDto> foodOrderDtoList  = new ArrayList<>();
             //주문에서 foods 하나씩 꺼내기.
-            for(OrderFood orderFood :orders.getOrderFoodList()){
+            for(OrderFood orderFood :orders.getFoods()){
                 String name = orderFood.getName();
                 int quantity = orderFood.getQuantity();
                 int price = orderFood.getPrice();
@@ -127,4 +127,8 @@ public class OrderService {
         }
         return  orderDtoList;
     }
+
+//    public List<Orders> getAllOrder() {
+//        return ordersRepository.findAll();
+//    }
 }

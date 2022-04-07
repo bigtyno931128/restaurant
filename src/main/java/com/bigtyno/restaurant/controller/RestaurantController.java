@@ -31,8 +31,7 @@ public class RestaurantController {
     //음식점 조회
     @GetMapping("/restaurants")
     public List<Restaurant> getListRestaurant(){
-        List<Restaurant> restaurantList = restaurantService.getListRestaurant();
-        return restaurantList;
+        return restaurantService.getListRestaurant();
     }
 
 }

@@ -6,6 +6,7 @@ import lombok.Getter;
 import lombok.NoArgsConstructor;
 
 import javax.persistence.*;
+import java.util.ArrayList;
 import java.util.List;
 
 @Getter
@@ -33,9 +34,11 @@ public class Restaurant {
     @Column(nullable = true)
     private int y;
 
-//    @OneToMany(mappedBy = "food", fetch = FetchType.EAGER)
-//    @JsonIgnoreProperties({"food"})
-//    private List<Food> foodList;
+    @OneToMany
+    @JoinColumn(name = "RESTAURANT_ID")
+    private List<Food> foodList = new ArrayList<>();
+
+
 
     public Restaurant(RestaurantRequestDto requestDto){
         this.name = requestDto.getName();

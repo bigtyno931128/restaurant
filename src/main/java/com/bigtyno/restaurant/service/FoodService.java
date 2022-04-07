@@ -1,6 +1,7 @@
 package com.bigtyno.restaurant.service;
 
 import com.bigtyno.restaurant.dto.FoodDto;
+import com.bigtyno.restaurant.dto.FoodResponseDto;
 import com.bigtyno.restaurant.entity.Food;
 import com.bigtyno.restaurant.entity.Restaurant;
 import com.bigtyno.restaurant.repository.FoodRepository;
@@ -10,6 +11,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
 import javax.transaction.Transactional;
+import java.util.ArrayList;
 import java.util.List;
 
 
@@ -32,6 +34,8 @@ public class FoodService {
         Restaurant restaurant = restaurantRepository.findById(restaurantId)
                 .orElseThrow(() -> new NullPointerException(""));
 
+        //List<Food> foodDtoList = new ArrayList<>();
+
         for(FoodDto foodDto:foodList) {
             // 음식점에는 중복된 음식이름 사용 불가
             if (foodRepository.existsByRestaurantAndName(restaurant, foodDto.getName())) {
@@ -40,15 +44,29 @@ public class FoodService {
             Validator.ValidFood(foodDto);
             Food food = new Food(restaurant, foodDto);
                 foodRepository.save(food);
+           // foodDtoList.add(food);
         }
+
+        //foodRepository.saveAll(foodDtoList);
+
     }
 
 
 
     //메뉴판가져오기
-    public List<Food> getFoodList(Long restaurantId){
+    public List<FoodResponseDto> getFoodList(Long restaurantId) {
         Restaurant restaurant = restaurantRepository.findById(restaurantId).orElseThrow(
                 IllegalArgumentException::new);
-        return foodRepository.findAllByRestaurant(restaurant);
+
+        List<FoodResponseDto> foodResponseDtos = new ArrayList<>();
+        for (Food food : restaurant.getFoodList()) {
+            FoodResponseDto foodResponseDto = new FoodResponseDto(
+                    food.getId(),
+                    food.getName(),
+                    food.getPrice()
+            );
+            foodResponseDtos.add(foodResponseDto);
+        }
+       return foodResponseDtos;
     }
 }
